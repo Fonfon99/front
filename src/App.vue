@@ -1,18 +1,18 @@
 <script>
-  import LoginVue from './components/Login.vue'; 
-  
+import LoginVue from './components/Login.vue'; 
 import Navbar from './components/Navbar.vue'; 
+import Home from './components/Home.vue';
   export default {
     name: "App",
     components: {
     LoginVue,
-    Navbar
+    Navbar,
+    Home,
 }
   }
 </script>
 
 <template>
-  <Navbar/>
   <router-view></router-view>
 </template>
 
