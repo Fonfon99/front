@@ -9,16 +9,17 @@ import {faCommentDots,faThumbsUp} from '@fortawesome/free-regular-svg-icons'
 library.add(faImage,faLink,faUser,faCommentDots,faThumbsUp)
 
 import App from "./App.vue";
-import Login from "./components/Login.vue";
-import Home from "./components/Home.vue";
+import LoginPage from "./pages/LoginPage.vue";
+import HomePage from "./pages/Home/HomePage.vue";
 
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue-3/dist/bootstrap-vue-3.css";
 
 
+
 const routes = [
-  { path: "/login", component: Login },
-  { path: "/home", component: Home},
+  { path: "/login", component: LoginPage },
+  { path: "/home", component: HomePage},
 ];
 const router = createRouter({
   history: createWebHistory(),

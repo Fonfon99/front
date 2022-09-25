@@ -1,22 +1,8 @@
 <script>
+import Navbar from '../components/layout/Navbar.vue';
     export default {
-        name: "Login",
-        // data() {
-        //     return {
-        //         email: "",
-        //         password: "",
-        //         error: "",
-        //     };
-        // },
-        // methods: {
-        //     login() {
-        //         this.$store.dispatch("login", {
-        //             email: this.email,
-        //             password: this.password,
-        //         });
-        //     },
-        // },
-    };
+    name: "LoginPage",
+};
 </script>
 <template>
     <div class="text-center m-auto">

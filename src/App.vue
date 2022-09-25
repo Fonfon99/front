@@ -1,13 +1,13 @@
 <script>
-import LoginVue from './components/Login.vue'; 
-import Navbar from './components/Navbar.vue'; 
-import Home from './components/Home.vue';
+import LoginPage from './pages/LoginPage.vue';; 
+import Navbar from './components/layout/Navbar.vue'; 
+import HomePage from './pages/Home/HomePage.vue'; 
   export default {
     name: "App",
     components: {
-    LoginVue,
+    LoginPage,
     Navbar,
-    Home,
+    HomePage,
 }
   }
 </script>
