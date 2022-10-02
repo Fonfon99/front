@@ -50,7 +50,7 @@
             </div>
             <input type="text" name="createPost" class="ps-3 my-1 flex-grow-1 me-4 w-auto rounded border border-1 bg-light"
                 placeholder="Post comment" />
-            <button type="button" class="btn btn-primary my-auto" style="width: 60px; height: 30px">Post</button>
+            <button type="button" class="btn btn-primary my-auto">Post</button>
         </div>
       </div>
     </div>

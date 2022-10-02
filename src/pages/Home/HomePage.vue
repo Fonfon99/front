@@ -5,11 +5,17 @@ import PostForm from './PostForm.vue';
 export default {
     name: "HomePage",
     components: { Navbar, Card, PostForm },
+    created() {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            this.$router.push("/login");
+        }
+    }
 };
 </script>
 
 <template>  
-<Navbar />
+<Navbar/>
 <PostForm />
 <Card/>
 <Card/>

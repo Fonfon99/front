@@ -1,12 +1,72 @@
 <script>
 import Navbar from '../components/layout/Navbar.vue';
+const methods = {
+  checkIdentifiers: function (event) {
+    console.log(this.username, this.password);
+    console.log(import.meta.env);
+    const url = import.meta.env.VITE_LOGIN_URL 
+
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username: this.username,
+        password: this.password
+      })
+    })
+      .then((response) => response.json())
+      // {
+      //   console.log(response);
+
+      //   // if (response.ok) return response.json();
+      //   // throw new Error(response.statusText);
+      //   })
+      .then((res) => {
+        console.log("res", (res));
+        const token = res.token;
+        localStorage.setItem("token", token);
+        // if (data.status === 'success') {
+        //   this.$router.push('/home');
+        // } else {
+        //   this.error = data.message;
+        // }
+      })
+      .catch((err) => {
+        console.error((err));
+      });
+
+
+    if (this.username !== "louis@louis.com") throw new Error("Invalid username");
+    if (this.password !== "123456") throw new Error("Invalid password");
+    this.$router.push("/home");
+    // if (this.username === 'admin' && this.password === 'admin') {
+    //   this.$router.push('/admin');
+    // } else if (this.username === 'user' && this.password === 'user') {
+    //   this.$router.push('/user');
+    // } else {
+    //   this.$router.push('/login');
+    // }
+  },
+}
     export default {
     name: "LoginPage",
+    data,
+    methods,
+    components: { Navbar }
 };
+function data() {
+  return {
+    username: '',
+    password: '',
+  }
+}
 </script>
 <template>
-    <div class="text-center m-auto">
-<div class="card">
+  <Navbar/>
+  <div class="text-center">
+  <div class="card mt-5 w-50 m-auto " style="height: 50%">
   <!-- Pills navs -->
 <ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
   <li class="nav-item" role="presentation">
@@ -24,36 +84,15 @@ import Navbar from '../components/layout/Navbar.vue';
 <div class="tab-content">
   <div class="tab-pane fade show active " id="pills-login " role="tabpanel" aria-labelledby="tab-login">
     <form>
-      <div class="text-center mb-3">
-        <p>Sign in with:</p>
-        <button type="button" class="btn btn-link btn-floating mx-1">
-          <i class="fab fa-facebook-f"></i>
-        </button>
-
-        <button type="button" class="btn btn-link btn-floating mx-1">
-          <i class="fab fa-google"></i>
-        </button>
-
-        <button type="button" class="btn btn-link btn-floating mx-1">
-          <i class="fab fa-twitter"></i>
-        </button>
-
-        <button type="button" class="btn btn-link btn-floating mx-1">
-          <i class="fab fa-github"></i>
-        </button>
-      </div>
-
-      <p class="text-center">or:</p>
-
       <!-- Email input -->
       <div class="form-outline mb-4">
-        <input type="email" id="loginName" class="form-control" />
+        <input type="email" id="loginName" class="form-control" placeholder="example@example.com" v-model="username"/>
         <label class="form-label" for="loginName">Email or username</label>
       </div>
 
       <!-- Password input -->
       <div class="form-outline mb-4">
-        <input type="password" id="loginPassword" class="form-control" />
+        <input type="password" id="loginPassword" class="form-control" v-model="password"/>
         <label class="form-label" for="loginPassword">Password</label>
       </div>
 
@@ -74,7 +113,7 @@ import Navbar from '../components/layout/Navbar.vue';
       </div>
 
       <!-- Submit button -->
-      <button type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
+      <button type="submit" class="btn btn-primary btn-block mb-4" @click.prevent="checkIdentifiers">Sign in</button>
 
       <!-- Register buttons -->
       <div class="text-center">
@@ -152,8 +191,14 @@ import Navbar from '../components/layout/Navbar.vue';
 <!-- Pills content -->
 </div>
 </div>
+<p class="text-muted">Value: {{username}}</p>
+<p class="text-muted">Value: {{password}}</p>
 </template>
-<style scoped>
+<style module>
+  body {
+    background-color: #cbcbcb9e;
+    padding: 0 !important;
+  }
     
     @media screen  {
       .card{

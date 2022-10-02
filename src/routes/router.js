@@ -1,0 +1,23 @@
+import { createRouter, createWebHistory } from "vue-router";
+import LoginPage from "../pages/LoginPage.vue";
+import HomePage from "../pages/home/HomePage.vue";
+
+const routes = [
+  { path: "/login", component: LoginPage },
+  { path: "/home", component: HomePage},
+  { path: "/", redirect: "/home"},
+];
+
+const router = createRouter({ history: createWebHistory(), routes });
+
+router.beforeEach((to, from) => {
+  const publicPages = ['/login'];
+  if (!publicPages.includes(to.path) && !isLoggedIn()) {
+    router.push("/login")
+  }
+});
+
+function isLoggedIn() {
+  return localStorage.getItem('token') === "JWToken";
+}
+export {router};
