@@ -2,7 +2,25 @@
     import Comment from './Comment.vue';
     export default {
     name: "Card",
-    components: { Comment }
+    components: { Comment },
+    props: {
+        email: {
+            type: String,
+            required: true
+        },
+        title: {
+            type: String,
+            required: true
+        },
+        url: {
+            type: String,
+            required: true
+        },
+        comments: {
+            type: Array,
+            required: true
+        }
+    },
 };
 </script>
 <template>
@@ -14,16 +32,16 @@
         <div class="d-flex my-auto">
             <span class="mx-1 pt-2" style="color: rgb(120, 124, 126) ; font-size: 8px;">•</span>
             <span class="me-1" style="color: rgb(120, 124, 126);">Posted by</span>
-            <div class="me-1" style="color: rgb(120, 124, 126)">username</div>
+            <div class="me-1" style="color: rgb(120, 124, 126)">{{email}}</div>
             <span style="color: rgb(120, 124, 126);">15 hours ago</span>
         </div>
     </div>
         <div class="ms-2">
-            <h3>Title or comments</h3>
+            <h3>{{title}}</h3>
         </div>
     <div class="mt-2 mx-auto" style="width:90%">
         <div class="position-relative" style="max-height: 360px; overflow: hidden;">
-            <img class="card-img-bottom" src="https://picsum.photos/300/200">
+            <img class="card-img-bottom" :src=url>
             <div class="pb-auto" style="padding-bottom:35%"></div>
         </div>
     </div>
@@ -41,7 +59,7 @@
     </h2>
     <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
       <div class="accordion-body">
-        <Comment />
+        <Comment></Comment>
         <div class="container-sm rounded border d-flex m bg-white">
             <div class="p-1">
                 <div class="rounded-circle border me-2 d-flex justify-content-center align-items-center" style="width: 40px; height: 40px" alt="Avatar">

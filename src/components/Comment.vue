@@ -1,12 +1,35 @@
 <script>
 export default {
   name: "Comment",
-  // props: {
-  //     comment: {
-  //         type: Object,
-  //         required: true,
-  //     },
-  // },
+  props: {
+      email: {
+          type: String,
+          required: true,
+      },
+      content: {
+          type: String,
+          required: true,
+      },
+      like: {
+          type: Number,
+          required: true,
+      },
+  },
+  methods: {
+    afficherComment(event) {
+      let path;
+      if (event.path[3].children[3].matches(".react")) {
+        path = event.path[3].children[4];
+      } else {
+        path = event.path[3].children[3];
+      }
+      if (path.matches(".disp")) {
+        path.classList.remove("disp");
+      } else {
+        path.classList.add("disp");
+      }
+    },
+  }
   // data() {
   //     return {
   //         showReply: false,
@@ -48,13 +71,12 @@ export default {
                   <div>
                     <div class="d-flex justify-content-between align-items-center">
                       <p class="mb-1">
-                        Maria Smantha <span class="small">- 2 hours ago</span>
+                        {{email}} <span class="small">- 2 hours ago</span>
                       </p>
                       <a href="#!"><i class="fas fa-reply fa-xs"></i><span class="small"> reply</span></a>
                     </div>
                     <p class="small mb-0">
-                      It is a long established fact that a reader will be distracted by
-                      the readable content of a page.
+                      {{content}}
                     </p>
                   </div>
 
@@ -195,8 +217,6 @@ export default {
       </div>
     </div>
   </section>
-
 </template>
-<style>
-
+<style lang="scss">
 </style>
