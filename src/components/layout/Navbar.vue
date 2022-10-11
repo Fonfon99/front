@@ -14,10 +14,10 @@ export default {
 
 <template>
   <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-    <div class="container-fluid ms-2">
+    <div class="container-fluid ms-2 ">
       <Logo />
       <div class="collapse navbar-collapse" id="navbarCollapse">
-        <form class="d-flex ms-3">
+        <form class="d-flex ms-3 w-75">
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
           <button class="btn btn-outline-secondary" type="submit" fill="#FFD7D7">Search</button>
         </form>
@@ -25,16 +25,11 @@ export default {
           <li class="nav-item ms-3">
             <router-link to="/home" class="nav-link active">Home</router-link>
           </li>
-          <li class="nav-item dropdown ms-auto">
-            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Admin</a>
-            <div class="dropdown-menu dropdown-menu-end">
-              <div class="dropdown-divider"></div>
-              <router-link to="/login" @click="logOut" class="dropdown-item">Logout</router-link>
-            </div>
+          <li class="nav-item ms-auto">
+            <router-link to="/login" @click="logOut" class="nav-link">Logout</router-link>
           </li>
         </ul>
       </div>
-
     </div>
   </nav>
 

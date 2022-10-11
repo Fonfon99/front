@@ -2,12 +2,19 @@
 import LoginPage from './pages/LoginPage.vue';; 
 import Navbar from './components/layout/Navbar.vue'; 
 import HomePage from './pages/Home/HomePage.vue'; 
+import PostForm from './pages/Home/PostForm.vue';
+import Comment from './components/Comment.vue';
+import Logo from './components/UI/Logo.vue';
   export default {
     name: "App",
     components: {
     LoginPage,
     Navbar,
     HomePage,
+    PostForm,
+    Comment,
+    Logo,
+    
 }
   }
 </script>

@@ -18,6 +18,7 @@ export default {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
+                'Accept': 'application/json',
                 Authorization: 'Bearer ' + localStorage.getItem("token")
             },
         })
@@ -27,7 +28,9 @@ export default {
                 throw new Error(response.statusText);
             })
             .then((res) => {
-                this.posts = res;
+                const {email, posts} = res
+                this.posts = posts
+                this.currentUser = email
                 console.log("this.post", (this.posts));
             })
             .catch((err) => {
@@ -36,7 +39,8 @@ export default {
     },
     data() {
         return {
-            posts: []
+            posts: [],
+            currentUser: "",
         }
     }
 };
@@ -45,8 +49,11 @@ export default {
 <template>
     <Navbar />
     <PostForm />
+    <div v-if="posts.length === 0">
+        No posts yet, create one!
+        </div>
     <div v-for="post in posts">
-        <Card :email="post.email" :title="post.title" :url="post.url" :comments="post.comments"/>
+        <Card :currentUser="currentUser" :email="post.user.email" :title="post.title" :url="post.url" :comments="post.comments" :id="post.id"/>
     </div>
 </template>
 
