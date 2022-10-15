@@ -2,6 +2,20 @@
 import Navbar from '../components/layout/Navbar.vue';
 
 const methods = {
+  validateEmail(email) {
+    const re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if (re.test(email)) {
+      this.errorMessage = '';
+    } else{
+      this.errorMessage = 'Invalid email';
+    }
+  },
+  switchModeToLogin() {
+    this.mode = 'login';
+  },
+  switchModeToRegister() {
+    this.mode = 'register';
+  },
   LogIn: function () {
     console.log(this.email, this.password);
     const url = import.meta.env.VITE_LOGIN_URL
@@ -60,91 +74,96 @@ export default {
   name: "LoginPage",
   data,
   methods,
+  watch: {
+    email(email){
+      this.validateEmail(this.email);
+    }
+  },
   components: { Navbar }
 };
 function data() {
   return {
     email: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
+    mode: 'login',
+    errorMessage: "",
   }
 }
 </script>
 <template>
   <Navbar />
   <div class="text-center">
-    <div class="card mt-5 w-50 m-auto " style="height: 50%">
+    <div class="card border-0 mt-5 w-50 m-auto">
       <!-- Pills navs -->
       <nav class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
         <div class="nav-item" role="presentation">
           <button class="nav-link active" id="tab-login" data-bs-toggle="pill" data-bs-target="#pills-login" type="button"
-            role="tab" aria-controls="pills-login" aria-selected="true">Login</button>
+            role="tab" aria-controls="pills-login" aria-selected="true" @click="switchModeToLogin()">Login</button>
         </div>
         <div class="nav-item" role="presentation">
           <button class="nav-link" id="tab-register" data-bs-toggle="pill" data-bs-target="#pills-register"
-            role="tab" aria-controls="pills-register" aria-selected="false">Register</button>
+            role="tab" aria-controls="pills-register" aria-selected="false" @click="switchModeToRegister()">Register</button>
         </div>
       </nav>
       <!-- Pills navs -->
 
       <!-- Pills content -->
       <div class="tab-content">
-        <div class="tab-pane fade show active" id="pills-login " role="tabpanel" aria-labelledby="tab-login">
+        <div class="tab-pane fade active show" id="pills-login " role="tabpanel" aria-labelledby="tab-login">
           <form>
             <!-- Email input -->
             <div class="form-outline mb-4">
-              <input type="email" id="loginName" class="form-control" placeholder="example@example.com"
-                v-model="email" />
-              <label class="form-label" for="loginName">Email</label>
+              <p class="text-danger">{{errorMessage}}</p>
+              <input type="email" id="loginName" class="form-control w-75 mx-auto bg-light" placeholder="example@example.com"
+                v-model="email" required/>
+                <label class="form-label" for="loginName">Email</label>
             </div>
 
             <!-- Password input -->
             <div class="form-outline mb-4">
-              <input type="password" id="loginPassword" class="form-control" v-model="password" />
+              <input type="password" id="loginPassword" class="form-control w-75 mx-auto bg-light" v-model="password" />
               <label class="form-label" for="loginPassword">Password</label>
             </div>
 
-            <!-- Submit button -->
-            <button type="submit" class="btn btn-primary btn-block mb-4" @click.prevent="LogIn">Sign In</button>
-          </form>
-        </div>
-        <div class="tab-pane fade" id="pills-register" role="tabpanel" aria-labelledby="tab-register">
-          <form>
-            <!-- email input -->
-            <div class="form-outline mb-4">
-              <input type="text" id="registeremail" class="form-control" v-model="email"/>
-              <label class="form-label" for="registeremail">email</label>
-            </div>
-
-            <!-- Password input -->
-            <div class="form-outline mb-4">
-              <input type="password" id="registerPassword" class="form-control" v-model="password"/>
-              <label class="form-label" for="registerPassword">Password</label>
-            </div>
-
             <!-- Repeat Password input -->
-            <div class="form-outline mb-4">
-              <input type="password" id="registerRepeatPassword" class="form-control" v-model="confirmPassword"/>
+            <div class="form-outline mb-4" v-if="mode == 'register'">
+              <input type="password" id="registerRepeatPassword" class="form-control w-75 mx-auto bg-light" v-model="confirmPassword"/>
               <label class="form-label" for="registerRepeatPassword">Repeat password</label>
             </div>
 
+            <div v-if="mode == 'login'">Don't have an account ? <span class="card_action" @click.prevent="switchModeToRegister()">Register here</span></div>
+            <div v-else>Already have an account ? <span @click.prevent="switchModeToLogin()">Log in here</span></div>
+
             <!-- Submit button -->
-            <button type="submit" class="btn btn-primary btn-block mb-3" @click.prevent="SignUp">Sign up</button>
+            <button :disabled="errorMessage !== ''" type="submit" class="btn btn-primary btn-block my-3" v-if="mode == 'login'" @click.prevent="LogIn">Sign In</button>
+            <button :disabled="errorMessage !== ''" type="submit" class="btn btn-primary btn-block my-3" v-if="mode == 'register'" @click.prevent="SignUp">Sign up</button>
           </form>
         </div>
+        
       </div>
-      <!-- Pills content -->
     </div>
   </div>
-  <p class="text-muted">Value: {{email}}</p>
-  <p class="text-muted">Value: {{password}}</p>
 </template>
 <style module>
+
 body {
-  background-color: #cbcbcb9e;
+  min-height: auto ;
   padding: 0 !important;
+  background-color:  #bcbdc2 !important;
 }
 
+span {
+  cursor: pointer;
+  color: blue;
+ 
+}
+
+span:hover {
+  color: rgba(0, 0, 255, 0.659);
+  text-decoration: none;
+  
+}
 @media screen {
   .card {
     width: 50%;

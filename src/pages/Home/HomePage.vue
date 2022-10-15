@@ -53,7 +53,7 @@ export default {
         No posts yet, create one!
         </div>
     <div v-for="post in posts">
-        <Card :currentUser="currentUser" :email="post.user.email" :title="post.title" :url="post.url" :comments="post.comments" :id="post.id"/>
+        <Card :currentUser="currentUser" :createdAt="post.createdAt" :email="post.user.email" :title="post.title" :url="post.url" :comments="post.comments" :id="post.id" :likesNbr="post.likesNbr" :likedBy="post.likedBy"/>
     </div>
 </template>
 
