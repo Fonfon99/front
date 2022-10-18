@@ -3,7 +3,7 @@ import Comment from './Comment.vue';
 export default {
     name: "Card",
     components: { Comment },
-    props: ['email', 'title', 'createdAt', 'url', 'comments', 'id', 'currentUser', 'likesNbr', 'likedBy'],
+    props: ['email', 'title', 'createdAt', 'url', 'comments', 'id', 'currentUser', 'likesNbr'],
     data() {
         return {
             admin: import.meta.env.VITE_ADMIN_USER,
@@ -25,7 +25,6 @@ export default {
                     Authorization: 'Bearer ' + localStorage.getItem("token")
                 },
                 body: JSON.stringify({
-                    LikedBy: this.currentUser,
                     likesNbr: this.likesNbr
                 })
             })
@@ -42,13 +41,12 @@ export default {
                     } else {
                         this.postliked = false;
                     }
-                   this.$router.go();
-                })
+                    this.$router.go();
+            })
                 .catch((err) => {
                     console.error((err));
                 });
         },
-        
         addComment(e){
             fetch(import.meta.env.VITE_POST_URL + "/" + this.id + "/comments", {
                 method: 'POST',
@@ -76,9 +74,6 @@ export default {
                     console.error((err));
                 });
         },
-        updatePost(){
-            
-        },
         deletePost(e){
             fetch(import.meta.env.VITE_POST_URL + "/" + this.id, {
                 method: 'DELETE',
@@ -99,22 +94,30 @@ export default {
                 .catch((err) => {
                     console.error((err));
                 });
-        }
+        },
+        displayImg(e) {
+            const ModalImg = document.getElementsByClassName("modal-img");
+            console.log(e.target.currentSrc);
+            ModalImg.src = e.target.currentSrc;
+            const myModal = new bootstrap.Modal(document.getElementById('ImageModal'), {
+                keyboard: false
+            });
+            myModal.show();
+        },
     }
 }
 
 </script>
 <template>
-    <div class="card rounded bg-light mx-auto my-4" style="width: 75%">
-        <div class="d-flex mt-2 mb-3">
+    <div class="card rounded-4 mx-auto my-4 shadow " style="width: 75%">
+        <div class="d-flex mt-2 mb-2">
             <div class="ms-3 me-2 rounded-circle border d-flex justify-content-center align-items-center"
                 style="width: 40px; height: 40px" alt="Avatar">
                 <font-awesome-icon icon="fa-solid fa-user"></font-awesome-icon>
             </div>
             <div class="d-flex my-auto">
-                <span class="mx-1 pt-2" style="color: rgb(120, 124, 126) ; font-size: 8px;">•</span>
-                <span class="me-1" style="color: rgb(120, 124, 126);">Posted by</span>
-                <div class="me-1" style="color: rgb(120, 124, 126)">{{email}}</div>
+                <small class="me-1" style="color: rgb(120, 124, 126);">Posted by</small>
+                <small class="me-1" style="color: rgb(120, 124, 126)">{{email}}</small>
                 <!-- <span style="color: rgb(120, 124, 126);">{{createdAt}}</span> -->
             </div>
             <div class="ms-auto me-3 my-auto">
@@ -122,18 +125,33 @@ export default {
             <i v-if="currentUser === email || currentUser === admin" class="fas fa-times" @click.prevent="deletePost"></i>
             </div>
         </div>
+        <hr class="mt-1 mb-4">
         <div class="ms-4">
             {{title}}
         </div>
-        <div class="mt-2 mx-auto" style="width:90%">
-            <div class="position-relative" style="max-height: 360px; overflow: hidden;">
-                <img v-if="url" class="card-img-bottom" :src=url>
-            </div>
-        </div>
-        <div class="d-flex position-relative mx-3 pb-3 mt-3 ">
+
+<div class="mt-2 mx-auto" >
+    <div class="position-relative"  style="max-height: 360px; overflow: hidden;">
+        <img v-if="url" class="post-img card-img rounded-0 overflow-hidden" @click.prevent="displayImg" :src=url>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="ImageModal" tabindex="-1" aria-labelledby="ImageModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <img v-if="url" class="modal-img card-img rounded-0 overflow-hidden" :src=url>
+      </div>
+    </div>
+  </div>
+</div>
+        <div class="d-flex position-relative mx-3 pb-3 mt-4 ">
             <div class="w-100">
                 <div class="d-flex justify-content-between">
-                    <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
+                    <button class="btn btn-primary rounded-4" type="button" data-bs-toggle="collapse"
                         data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                         comments
                     </button>
@@ -172,7 +190,16 @@ export default {
 <style >
 .fa-times:hover {
     cursor: pointer;
-    color: red;
+    color: #FD2D01;
     transform: scale(1.2);
 }
+
+.post-img {
+    width: 130% !important;
+}
+.post-img:hover {
+    transform: scale(1.1);
+    transition: transform 0.5s;
+}
+
 </style>

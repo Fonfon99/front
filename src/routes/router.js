@@ -4,7 +4,7 @@ import HomePage from "../pages/home/HomePage.vue";
 const routes = [
   { path: "/login", component: LoginPage },
   { path: "/home", component: HomePage},
-  { path: "/", redirect: "/login"},
+  { path: "/", redirect: "/home"},
 ];
 
 const router = createRouter({ history: createWebHistory(), routes });

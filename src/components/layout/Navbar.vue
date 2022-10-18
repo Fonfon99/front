@@ -13,14 +13,10 @@ export default {
 </script>
 
 <template>
-  <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+  <nav class="navbar navbar-expand navbar-dark bg-dark">
     <div class="container-fluid ms-2 ">
       <Logo />
-      <!-- <form class="d-flex ms-3 w-75">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-secondary" type="submit" fill="#FFD7D7">Search</button>
-      </form> -->
-      <!-- <div class="collapse navbar-collapse" id="navbarCollapse"> -->
+      
         <ul class="navbar-nav ms-auto mb-2 mb-md-0">
           <li class="nav-item ms-auto">
             <router-link to="/home" class="nav-link active">Home</router-link>

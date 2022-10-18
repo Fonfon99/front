@@ -23,6 +23,7 @@ export default {
             },
         })
             .then((response) => {
+                console.log(response);
                 if (response.ok)
                     return response.json();
                 throw new Error(response.statusText);
@@ -31,10 +32,14 @@ export default {
                 const {email, posts} = res
                 this.posts = posts
                 this.currentUser = email
-                console.log("this.post", (this.posts));
+                console.log("this.post", (res));
             })
             .catch((err) => {
                 console.error((err));
+                if (err.message === "Unauthorized") {
+                    localStorage.removeItem('token');
+                    this.$router.push("/login");
+                }
             });
     },
     data() {
@@ -53,7 +58,7 @@ export default {
         No posts yet, create one!
         </div>
     <div v-for="post in posts">
-        <Card :currentUser="currentUser" :createdAt="post.createdAt" :email="post.user.email" :title="post.title" :url="post.url" :comments="post.comments" :id="post.id" :likesNbr="post.likesNbr" :likedBy="post.likedBy"/>
+        <Card :currentUser="currentUser" :createdAt="post.createdAt" :email="post.user.email" :title="post.title" :url="post.url" :comments="post.comments" :id="post.id" :likesNbr="post.likesNbr" />
     </div>
 </template>
 

@@ -150,7 +150,7 @@ function data() {
 body {
   min-height: auto ;
   padding: 0 !important;
-  background-color:  #bcbdc2 !important;
+  background-color:  #eeeeee !important;
 }
 
 span {
