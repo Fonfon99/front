@@ -28,13 +28,11 @@
                     body: formData,
                 })
                     .then((response) => {
-                        console.log(response);
                         if (response.ok)
                             return response.json();
                         throw new Error(response.statusText);
                     })
                     .then((response) => {
-                        console.log("POST TO SUBMMIT", response);
                         this.$router.go();
                     })
                     .catch((err) => {

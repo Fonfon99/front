@@ -17,7 +17,6 @@ const methods = {
     this.mode = 'register';
   },
   LogIn: function () {
-    console.log(this.email, this.password);
     const url = import.meta.env.VITE_LOGIN_URL
     fetch(url, {
       method: 'POST',
@@ -34,7 +33,6 @@ const methods = {
         throw new Error(response.statusText);
       })
       .then((res) => {
-        console.log("res", (res));
         const token = res.token;
         localStorage.setItem("token", token);
         this.$router.push("/home");
@@ -62,7 +60,6 @@ const methods = {
         throw new Error(response.statusText);
       })
       .then((res) => {
-        console.log("res", (res));
         this.$router.go();
       })
       .catch((err) => {

@@ -56,13 +56,11 @@ export default {
                 })
             })
                 .then((response) => {
-                    console.log("response", response);
                     if (response.ok)
                         return response.json();
                     throw new Error(response.statusText);
                 })
                 .then((res) => {
-                    console.log("res", (res));
                     if (res.like === true) {
                         this.postliked = true;
                     } else {
