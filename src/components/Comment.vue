@@ -8,8 +8,8 @@ export default {
 };
 </script>
 <template>
-  <div class="mh-100 " style="background-color: #e7effd;">
-    <div class="container text-dark pt-2">
+  <div class="mh-100 bg-light" >
+    <div class="container bgcom text-dark pt-2">
       <div class="row d-flex justify-content-start">
         <div class="col-md-11 col-lg-9 col-xl-5">
           <div class="d-flex flex-start mb-4">
@@ -33,6 +33,8 @@ export default {
     </div>
   </div>
 </template>
-<style lang="scss">
-
+<style scoped>
+.bgcom {
+  background: #ffd7d71c  !important;
+}
 </style>

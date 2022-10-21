@@ -93,8 +93,8 @@ function data() {
 </script>
 <template>
   <Navbar />
-  <div class="text-center">
-    <div class="card border-0 mt-5 w-50 m-auto">
+  <div class="text-center mx-auto p-5">
+    <div class="card border-0 shadow mt-5 w-50 m-auto">
       <!-- Pills navs -->
       <nav class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
         <div class="nav-item" role="presentation">
@@ -132,8 +132,8 @@ function data() {
               <label class="form-label" for="registerRepeatPassword">Repeat password</label>
             </div>
 
-            <div v-if="mode == 'login'">Don't have an account ? <span class="card_action" @click.prevent="switchModeToRegister()">Register here</span></div>
-            <div v-else>Already have an account ? <span @click.prevent="switchModeToLogin()">Log in here</span></div>
+            <div v-if="mode == 'login'">Don't have an account ? <span class="span_action" @click.prevent="switchModeToRegister()">Register here</span></div>
+            <div v-else>Already have an account ? <span class="span_action" @click.prevent="switchModeToLogin()">Log in here</span></div>
 
             <!-- Submit button -->
             <button :disabled="errorMessage !== ''" type="submit" class="btn btn-primary btn-block my-3" v-if="mode == 'login'" @click.prevent="LogIn">Sign In</button>
@@ -145,23 +145,20 @@ function data() {
     </div>
   </div>
 </template>
-<style module>
+<style scoped>
 
 body {
-  min-height: auto ;
-  padding: 0 !important;
-  background-color:  #eeeeee !important;
+  background-color:  #8c7070 !important;
 }
 
 span {
-  cursor: pointer;
-  color: blue;
- 
+  cursor: pointer !important;
+  color: blue  !important;
 }
 
 span:hover {
-  color: rgba(0, 0, 255, 0.659);
-  text-decoration: none;
+  color: rgba(0, 0, 255, 0.659) !important;
+  text-decoration: none !important;
   
 }
 @media screen {
