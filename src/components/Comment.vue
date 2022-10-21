@@ -20,7 +20,7 @@ export default {
             <div class="card w-100">
               <div class="card-body p-2">
                 <div class="">
-                  <h6>{{email}}</h6>
+                  <small>{{email}}</small>
                   <div>
                     {{content}}
                   </div>
