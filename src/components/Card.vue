@@ -139,10 +139,10 @@ export default {
             <div class="d-flex my-auto">
                 <small class="me-1" style="color: rgb(120, 124, 126);">Posted by</small>
                 <small class="me-1" style="color: rgb(120, 124, 126)">{{email}}</small>
-                <!-- <span style="color: rgb(120, 124, 126);">{{createdAt}}</span> -->
+               
             </div>
             <div class="ms-auto me-3 my-auto">
-            <!-- <i v-if="currentUser === email || currentUser === admin" class="fa-solid fa-pencil" @click.prevent="updatePost"></i> -->
+            
             <i v-if="currentUser === email || currentUser === admin" class="fas fa-times" @click.prevent="deletePost"></i>
             </div>
         </div>
