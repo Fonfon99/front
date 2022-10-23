@@ -11,6 +11,8 @@ export default {
             postliked: false,
             valeur: "#test" + this.id,
             valeur2: "test" + this.id,
+            updateModal: "updateModal" + this.id,
+            newUrl: null,
         };
     },
     mounted() {
@@ -118,6 +120,39 @@ export default {
                 .catch((err) => {
                     console.error((err));
                 });
+            },
+            setNewImage(e){
+                this.newUrl = e.target.files[0];
+            },
+        updatePost(e){
+            const formData = new FormData();
+            formData.append('title', this.title);
+            formData.append('url', this.newUrl);
+            console.log(this.newUrl);
+            fetch(import.meta.env.VITE_POST_URL + "/" + this.id, {
+                method: 'PUT',
+                headers: {
+                    'Accept': 'application/json',
+                    'Accept': 'multipart/form-data',
+                    Authorization: 'Bearer ' + localStorage.getItem("token")
+                },
+                body: formData,
+            })
+                .then((response) => {
+                    if (response.ok)
+                        return response.json();
+                    throw new Error(response.statusText);
+                })
+                .then((res) => {
+                    this.$router.go();
+                })
+                .catch((err) => {
+                    console.error((err));
+                });
+        },
+        displayUpdate(){
+            const myModalUpdate = new bootstrap.Modal(document.getElementById('updateModal' + this.id));
+            myModalUpdate.show();
         },
         displayImg(e) {
             const ModalImg = document.getElementById("modal-img");
@@ -142,10 +177,36 @@ export default {
                
             </div>
             <div class="ms-auto me-3 my-auto">
-            
+            <button v-if="currentUser === email || currentUser === admin" class="updbtn" @click="displayUpdate()"><i class="fa fa-pencil me-3"></i></button>
+            <!-- <i v-if="currentUser === email || currentUser === admin" class="fa fa-pencil me-3" @click.prevent="displayUpdate(e)"></i> -->
             <i v-if="currentUser === email || currentUser === admin" class="fas fa-times" @click.prevent="deletePost"></i>
             </div>
         </div>
+
+<!-- Modal -->
+<div class="modal fade" :id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="updateModalLabel">Update your Post</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" class="form-control" id="title" v-model="title">
+        </div>
+        <div class="mb-3">
+            <label for="url" class="form-label">Url</label>
+            <input type="file" class="form-control" id="url" @change="setNewImage">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" @click.prevent="updatePost">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
         <hr class="mt-1 mb-4">
         <div class="ms-4">
             {{title}}
@@ -209,7 +270,11 @@ export default {
 </template>
 
 <style >
-
+.updbtn{
+    background-color: transparent !important;
+    border: none    !important;
+    outline: none  !important;
+}
 .fa-times:hover {
     cursor: pointer;
     color: #ff8080;
@@ -217,6 +282,11 @@ export default {
 }
 .fa-thumbs-up {
     color: #ffd7d7;
+}
+.fa-pencil:hover {
+    cursor: pointer;
+    color: #ff8080;
+    transform: scale(1.2);
 }
 
 .fa-thumbs-up:hover {
